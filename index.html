@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Byungdoo Kong</title>
+<script>
+  /* Set theme before paint to avoid flash */
+  (function(){try{
+    var t=localStorage.getItem('theme');
+    if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}
+    document.documentElement.setAttribute('data-theme',t);
+  }catch(e){}})();
+</script>
+<meta name="description" content="Byungdoo Kong — Ph.D. student in Statistics and Applied Probability at UC Santa Barbara. Stochastic control and games, mathematical finance, actuarial science.">
+
+<!-- Favicon (BK monogram, self-contained) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23003660'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='32' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3EBK%3C/text%3E%3C/svg%3E">
+
+<!-- Social share preview (Open Graph + Twitter) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Byungdoo Kong">
+<meta property="og:description" content="Ph.D. student in Statistics and Applied Probability at UC Santa Barbara — stochastic control and games, mathematical finance, actuarial science.">
+<meta property="og:url" content="https://byungdookong.github.io/">
+<meta property="og:image" content="https://byungdookong.github.io/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Byungdoo Kong">
+<meta name="twitter:description" content="Ph.D. student in Statistics and Applied Probability at UC Santa Barbara.">
+<meta name="twitter:image" content="https://byungdookong.github.io/og-image.png">
+<style>
+  :root{
+    --ink:#1a1a1a;
+    --muted:#666;
+    --soft:#333;
+    --line:#e5e5e5;
+    --accent:#003660;      /* UCSB navy */
+    --gold:#febc11;        /* UCSB gold (highlight only) */
+    --bg:#fdfdfc;
+    --max:760px;
+  }
+  :root[data-theme="dark"]{
+    --ink:#e6e8ea;
+    --muted:#969aa0;
+    --soft:#c3c7cc;
+    --line:#2a2e33;
+    --accent:#7fb3e0;      /* lightened navy for dark bg */
+    --gold:#febc11;
+    --bg:#15171a;
+  }
+  /* Fallback for no-JS: follow the OS setting */
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#e6e8ea;
+      --muted:#969aa0;
+      --soft:#c3c7cc;
+      --line:#2a2e33;
+      --accent:#7fb3e0;
+      --gold:#febc11;
+      --bg:#15171a;
+    }
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:17px;
+    line-height:1.6;
+    transition:background .3s ease, color .3s ease;
+  }
+
+  /* Thin UCSB brand bar */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;height:3px;z-index:20;
+    background:var(--accent);
+  }
+
+  /* Dark-mode toggle */
+  .theme-toggle{
+    position:fixed;top:18px;right:18px;z-index:10;
+    width:38px;height:38px;border-radius:50%;
+    border:1px solid var(--line);background:var(--bg);color:var(--ink);
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:background .3s ease,color .2s ease,border-color .2s ease;
+  }
+  .theme-toggle:hover{border-color:var(--accent);color:var(--accent);}
+  .theme-toggle .icon-sun{display:none;}
+  :root[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+  :root[data-theme="dark"] .theme-toggle .icon-sun{display:inline;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:64px 24px 96px;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* Header */
+  header{margin-bottom:8px;}
+  h1{font-size:1.9rem;margin:0 0 4px;letter-spacing:.4px;}
+  .han{color:var(--muted);font-size:1.05rem;font-weight:normal;}
+  .role{color:var(--muted);margin:2px 0 0;font-size:1rem;}
+  .role .org{color:var(--ink);}
+  .links{margin-top:16px;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:.95rem;}
+  .links a{margin-right:18px;white-space:nowrap;font-weight:500;}
+
+  /* Tabs */
+  .tabs{
+    display:flex;flex-wrap:wrap;gap:4px;
+    margin:34px 0 28px;
+    border-bottom:1px solid var(--line);
+    font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+  }
+  .tab{
+    appearance:none;background:none;border:none;cursor:pointer;
+    font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);
+    padding:10px 14px;margin-bottom:-1px;
+    border-bottom:2px solid transparent;
+  }
+  .tab:hover{color:var(--ink);}
+  .tab[aria-selected="true"]{
+    color:var(--accent);
+    border-bottom-color:var(--gold);
+    font-weight:600;
+  }
+
+  /* Panels */
+  .panel{display:none;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  h2.section-title{
+    font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+    font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;
+    color:var(--accent);margin:0 0 18px;
+  }
+  p{margin:0 0 14px;}
+  .lead{font-size:1.02rem;}
+
+  /* Publication list */
+  ol.pubs{margin:0;padding:0;list-style:none;counter-reset:pub;}
+  ol.pubs li{position:relative;padding:0 0 16px 34px;margin-bottom:4px;}
+  ol.pubs li::before{
+    counter-increment:pub;content:"[" counter(pub) "]";
+    position:absolute;left:0;top:0;color:var(--muted);
+    font-size:.82rem;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;line-height:1.7;
+  }
+  .ptitle{font-weight:bold;}
+  .ptitle a{color:var(--ink);}
+  .ptitle a:hover{color:var(--accent);text-decoration:underline;}
+  .venue{font-style:italic;color:var(--soft);}
+  .meta{color:var(--muted);font-size:.92rem;}
+
+  /* Compact rows */
+  .row{display:flex;gap:14px;padding:7px 0;border-bottom:1px solid var(--line);}
+  .row:last-child{border-bottom:none;}
+  .row .when{
+    flex:0 0 130px;color:var(--muted);font-size:.86rem;
+    font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;padding-top:2px;
+  }
+  .row .what{flex:1;}
+  .row .what .sub{color:var(--muted);font-size:.92rem;}
+
+  footer{margin-top:56px;color:var(--muted);font-size:.82rem;
+    font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+    border-top:1px solid var(--line);padding-top:16px;}
+
+  @media (max-width:560px){
+    .wrap{padding:40px 20px 64px;}
+    h1{font-size:1.75rem;}
+    .tab{padding:9px 10px;font-size:.76rem;}
+    .row{flex-direction:column;gap:2px;}
+    .row .when{flex-basis:auto;}
+    .links a{display:inline-block;margin-bottom:6px;}
+  }
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark / light mode">
+  <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+</button>
+<div class="wrap">
+
+  <header>
+    <h1>Byungdoo Kong <span class="han">공병두</span></h1>
+    <p class="role">Ph.D. Student, Statistics &amp; Applied Probability</p>
+    <p class="role">University of California, Santa Barbara</p>
+    <div class="links">
+      <a href="mailto:bkong@ucsb.edu">bkong@ucsb.edu</a>
+      <a href="https://scholar.google.com/citations?user=g1K-a3QAAAAJ&hl=en" target="_blank" rel="me noopener">Google Scholar</a>
+      <a href="https://www.linkedin.com/in/byungdoo-kong-756a95254/" target="_blank" rel="me noopener">LinkedIn</a>
+      <a href="CV.pdf">CV</a>
+    </div>
+  </header>
+
+  <!-- Tab buttons -->
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" id="tab-about"        aria-controls="about"        data-tab="about">About</button>
+    <button class="tab" role="tab" id="tab-publications" aria-controls="publications" data-tab="publications">Publications</button>
+    <button class="tab" role="tab" id="tab-talks"        aria-controls="talks"        data-tab="talks">Talks</button>
+    <button class="tab" role="tab" id="tab-teaching"     aria-controls="teaching"     data-tab="teaching">Teaching</button>
+  </nav>
+
+  <!-- About -->
+  <section class="panel" id="about" role="tabpanel" aria-labelledby="tab-about">
+    <h2 class="section-title">About</h2>
+    <p>
+      I am a Ph.D. student in Statistics and Applied Probability at the University of
+      California, Santa Barbara (UCSB), advised by
+      <a href="https://sites.google.com/site/ruimenghu1/" target="_blank" rel="noopener">Prof. Ruimeng Hu</a>,
+      where I pursue the doctoral emphasis in Financial Mathematics and Statistics.
+      My research lies at the intersection of stochastic control and games,
+      mathematical finance, and actuarial science.
+    </p>
+    <p>
+      Before UCSB, I received an M.Sc. in Actuarial Science (advised by
+      <a href="https://professor.skku.edu/researcher_eng/professorList.do?mode=view&amp;perId=LZStrF4cQbAsgbgdgzgdgC4IBYCkDCAjKBHATmAEsAGAEQEUBeaoA%20&amp;jojikCode2=317202&amp;jojikCode1=3172&amp;categoryId=U" target="_blank" rel="noopener">Prof. Hangsuck Lee</a>)
+      and a B.Sc. in Mathematics, both from Sungkyunkwan University (SKKU). There, I worked on the
+      analytic valuation of barrier, lookback, and digital options, as well as overlapping-generations
+      (OLG) models for pension schemes, and served as a research assistant at the university's
+      Institute of Basic Science. I am currently pursuing the Associate of the Society of Actuaries (ASA) designation.
+    </p>
+  </section>
+
+  <!-- Publications -->
+  <section class="panel" id="publications" role="tabpanel" aria-labelledby="tab-publications">
+    <h2 class="section-title">Working Papers</h2>
+    <ol class="pubs">
+      <li><span class="ptitle">Endogenous reinsurance pricing in large competitive insurance markets: Finite-player and mean-field analysis</span>
+        <span class="meta">(with R. Hu).</span>
+        <span class="venue">Working paper</span>, 2026.
+        <!-- arXiv 등록 후 주석 해제: <a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank" rel="noopener">[arXiv]</a> -->
+      </li>
+    </ol>
+
+    <h2 class="section-title" style="margin-top:34px;">Journal Publications</h2>
+    <ol class="pubs">
+      <li><span class="ptitle"><a href="https://doi.org/10.1080/00036846.2026.2648112" target="_blank" rel="noopener">Valuing American strangle options via double barrier first-touch digitals</a></span>
+        <span class="meta">(with H. Lee, M. Lee, and H. Ha).</span>
+        <span class="venue">Applied Economics</span>, 1&ndash;21, 2026.</li>
+      <li><span class="ptitle"><a href="https://doi.org/10.1016/j.frl.2026.109843" target="_blank" rel="noopener">A first-touch approach to American option valuation with piecewise linear boundaries</a></span>
+        <span class="meta">(with H. Lee, M. Lee, and H. Ha).</span>
+        <span class="venue">Finance Research Letters</span>, 98, 109843, 2026.</li>
+      <li><span class="ptitle"><a href="https://doi.org/10.1007/s10614-025-10921-4" target="_blank" rel="noopener">Age-specific multi-stage OLG model for PAYG pension schemes</a></span>
+        <span class="meta">(with H. Lee, J. Hong, and S. Y. Jeong).</span>
+        <span class="venue">Computational Economics</span>, 67(3), 1463&ndash;1510, 2026.</li>
+      <li><span class="ptitle"><a href="https://doi.org/10.1007/s10614-024-10695-1" target="_blank" rel="noopener">Two-asset double barrier options</a></span>
+        <span class="meta">(with H. Lee, H. Ha, and G. Lee).</span>
+        <span class="venue">Computational Economics</span>, 66(2), 1071&ndash;1106, 2025.</li>
+      <li><span class="ptitle"><a href="https://doi.org/10.1016/j.najef.2025.102372" target="_blank" rel="noopener">Multi-step double barrier options under time-varying interest rates</a></span>
+        <span class="meta">(with H. Lee, Y. Kye, and S. Song).</span>
+        <span class="venue">The North American Journal of Economics and Finance</span>, 76, 102372, 2025.</li>
+      <li><span class="ptitle"><a href="https://doi.org/10.1016/j.frl.2024.105726" target="_blank" rel="noopener">Foreign equity lookback options with partial monitoring</a></span>
+        <span class="meta">(with H. Lee and H. Ha).</span>
+        <span class="venue">Finance Research Letters</span>, 67, 105726, 2024.</li>
+      <li><span class="ptitle"><a href="https://doi.org/10.1016/j.najef.2024.102174" target="_blank" rel="noopener">Valuing three-asset barrier options and autocallable products via exit probabilities of Brownian bridge</a></span>
+        <span class="meta">(with H. Lee, H. Ha, and M. Lee).</span>
+        <span class="venue">The North American Journal of Economics and Finance</span>, 73, 102174, 2024.</li>
+      <li><span class="ptitle"><a href="https://doi.org/10.1016/j.frl.2023.104699" target="_blank" rel="noopener">Pricing first-touch digitals with a multi-step double boundary and American barrier options</a></span>
+        <span class="meta">(with H. Lee and H. Ha).</span>
+        <span class="venue">Finance Research Letters</span>, 59, 104699, 2024.</li>
+      <li><span class="ptitle"><a href="https://doi.org/10.1016/j.frl.2023.103772" target="_blank" rel="noopener">Pricing multi-step double barrier options by the efficient non-crossing probability</a></span>
+        <span class="meta">(with H. Lee, H. Ha, and M. Lee).</span>
+        <span class="venue">Finance Research Letters</span>, 54, 103772, 2023.</li>
+    </ol>
+  </section>
+
+  <!-- Talks -->
+  <section class="panel" id="talks" role="tabpanel" aria-labelledby="tab-talks">
+    <h2 class="section-title">Talks</h2>
+    <div class="row"><div class="when">Jul 2026</div>
+      <div class="what">Finite-player and mean-field Stackelberg reinsurance&ndash;investment games with relative performance and common noise
+        <div class="sub">10th <a href="https://aqfc.postech.ac.kr/" target="_blank" rel="noopener">Asian Quantitative Finance Conference (AQFC 2026)</a>, Pohang, Korea</div></div></div>
+    <div class="row"><div class="when">Jun 2026</div>
+      <div class="what">Finite-player and mean-field Stackelberg&ndash;Nash equilibria in reinsurance&ndash;investment games
+        <div class="sub">29th <a href="https://ime2026.org/" target="_blank" rel="noopener">International Congress on Insurance: Mathematics and Economics (IME 2026)</a>, Seoul, Korea</div></div></div>
+    <div class="row"><div class="when">Feb 2024</div>
+      <div class="what">Optimal early surrender value and surrender penalty rate for variable annuities
+        <div class="sub">2023 Winter Conference of Korean Insurance Academic Society, Busan, Korea</div></div></div>
+    <div class="row"><div class="when">Aug 2023</div>
+      <div class="what">Multi-step double barrier rebate options
+        <div class="sub">2023 Korea Insurance Joint Conference, Cheonan, Korea</div></div></div>
+    <div class="row"><div class="when">Mar 2023</div>
+      <div class="what">Valuation of two-asset double barrier products
+        <div class="sub">2023 Spring Conference of Korea Risk Management Society, Seoul, Korea</div></div></div>
+  </section>
+
+  <!-- Teaching -->
+  <section class="panel" id="teaching" role="tabpanel" aria-labelledby="tab-teaching">
+    <h2 class="section-title">Teaching</h2>
+    <div class="row"><div class="when">2024 &ndash; present</div>
+      <div class="what">Teaching Assistant, UC Santa Barbara
+        <div class="sub">PSTAT 120A/B/C (Probability &amp; Statistics), PSTAT 171 (Mathematics of Fixed Income Markets), PSTAT 172A (Actuarial Statistics), PSTAT 173 (Risk Theory)</div></div></div>
+    <div class="row"><div class="when">2023</div>
+      <div class="what">Teaching Assistant, Korea National Open University
+        <div class="sub">AI in Finance</div></div></div>
+    <div class="row"><div class="when">2022 &ndash; 2023</div>
+      <div class="what">Teaching Assistant, Sungkyunkwan University
+        <div class="sub">GEDB001 (Calculus 1), GEDB003 (Linear Algebra)</div></div></div>
+  </section>
+
+  <footer>
+    &copy; 2026 Byungdoo Kong &middot; Santa Barbara, CA
+  </footer>
+
+</div>
+
+<script>
+  (function(){
+    var tabs   = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+    var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+
+    function activate(name, push){
+      tabs.forEach(function(t){
+        var on = t.dataset.tab === name;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function(p){
+        p.classList.toggle('active', p.id === name);
+      });
+      if(push && history.replaceState){ history.replaceState(null, '', '#' + name); }
+    }
+
+    tabs.forEach(function(t){
+      t.addEventListener('click', function(){ activate(t.dataset.tab, true); });
+    });
+
+    // keyboard arrow navigation
+    document.querySelector('.tabs').addEventListener('keydown', function(e){
+      var i = tabs.findIndex(function(t){ return t.getAttribute('aria-selected') === 'true'; });
+      if(e.key === 'ArrowRight'){ e.preventDefault(); tabs[(i+1)%tabs.length].focus(); tabs[(i+1)%tabs.length].click(); }
+      if(e.key === 'ArrowLeft'){  e.preventDefault(); tabs[(i-1+tabs.length)%tabs.length].focus(); tabs[(i-1+tabs.length)%tabs.length].click(); }
+    });
+
+    // open the tab named in the URL hash, else default to About
+    var initial = (location.hash || '').replace('#','');
+    var valid = tabs.some(function(t){ return t.dataset.tab === initial; });
+    activate(valid ? initial : 'about', false);
+  })();
+
+  // Dark-mode toggle
+  (function(){
+    var root = document.documentElement;
+    var btn  = document.getElementById('themeToggle');
+    btn.addEventListener('click', function(){
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try{ localStorage.setItem('theme', next); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>
