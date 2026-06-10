@@ -139,10 +139,10 @@
   .lead{font-size:1.02rem;}
 
   /* Publication list */
-  ol.pubs{margin:0;padding:0;list-style:none;counter-reset:pub;}
+  ol.pubs{margin:0;padding:0;list-style:none;}
   ol.pubs li{position:relative;padding:0 0 16px 34px;margin-bottom:4px;}
   ol.pubs li::before{
-    counter-increment:pub;content:"[" counter(pub) "]";
+    content:"[" counter(list-item) "]";
     position:absolute;left:0;top:0;color:var(--muted);
     font-size:.82rem;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;line-height:1.7;
   }
@@ -213,15 +213,14 @@
       <a href="https://sites.google.com/site/ruimenghu1/" target="_blank" rel="noopener">Prof. Ruimeng Hu</a>,
       where I pursue the doctoral emphasis in Financial Mathematics and Statistics.
       My research lies at the intersection of stochastic control and games,
-      mathematical finance, and actuarial science.
+      mathematical finance, and actuarial science. I am also pursuing the
+      Associate of the Society of Actuaries (ASA) designation.
     </p>
     <p>
       Before UCSB, I received an M.Sc. in Actuarial Science (advised by
       <a href="https://professor.skku.edu/researcher_eng/professorList.do?mode=view&amp;perId=LZStrF4cQbAsgbgdgzgdgC4IBYCkDCAjKBHATmAEsAGAEQEUBeaoA%20&amp;jojikCode2=317202&amp;jojikCode1=3172&amp;categoryId=U" target="_blank" rel="noopener">Prof. Hangsuck Lee</a>)
-      and a B.Sc. in Mathematics, both from Sungkyunkwan University (SKKU). There, I worked on the
-      analytic valuation of barrier, lookback, and digital options, as well as overlapping-generations
-      (OLG) models for pension schemes, and served as a research assistant at the university's
-      Institute of Basic Science. I am currently pursuing the Associate of the Society of Actuaries (ASA) designation.
+      and a B.Sc. in Mathematics, both from Sungkyunkwan University (SKKU), where I also served as a
+      research assistant at the university's Institute of Basic Science.
     </p>
   </section>
 
@@ -237,7 +236,7 @@
     </ol>
 
     <h2 class="section-title" style="margin-top:34px;">Publications</h2>
-    <ol class="pubs">
+    <ol class="pubs" reversed>
       <li><span class="ptitle"><a href="https://doi.org/10.1080/00036846.2026.2648112" target="_blank" rel="noopener">Valuing American strangle options via double barrier first-touch digitals</a></span>
         <span class="meta">(with H. Lee, M. Lee, and H. Ha).</span>
         <span class="venue">Applied Economics</span>, 1&ndash;21, 2026.</li>
